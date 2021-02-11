@@ -6,6 +6,7 @@ exports.devServer = () => ({
   plugins: [
     new WebpackPluginServe({
       port: process.env.PORT || 8080,
+      host: "localhost",
       static: "./dist",
       liveReload: true,
       waitForBuild: true,
@@ -15,4 +16,12 @@ exports.devServer = () => ({
 
 exports.page = ({ title }) => ({
   plugins: [new MiniHtmlWebpackPlugin({ context: { title } })],
+});
+
+exports.loadCSS = () => ({
+  module: {
+    rules: [
+      { test: /\.css$/, use: [ "style-loader", "css-loader"] },
+    ],
+  },
 });
