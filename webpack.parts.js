@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const glob = require("glob");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
-const { ALL } = require("dns");
 
 const ALL_FILES = glob.sync(path.join(__dirname, "src/*.js"));
 
@@ -76,4 +75,18 @@ exports.eliminateUnusedCSS = () => ({
       ],
     }),
   ],
+});
+
+exports.autoprefix = () => ({
+  loader: "postcss-loader",
+  options: {
+    postcssOptions: { plugins: [require("autoprefixer")()] },
+  },
+});
+
+exports.csslinter = () => ({
+  loader: "postcss-loader",
+  options: {
+    postcssOptions: { plugins: [require("stylelint")()] },
+  },
 });
